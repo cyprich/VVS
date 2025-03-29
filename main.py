@@ -1,3 +1,4 @@
-from cv5_uloha5 import cv5
+from cv6 import main
 
-cv5()
+if __name__ == '__main__':
+    main()
