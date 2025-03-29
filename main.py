@@ -1,4 +1,3 @@
-from cv6 import main
+from du1.main import main
 
-if __name__ == '__main__':
-    main()
+main()
