@@ -1,12 +1,12 @@
 from du1.rgb import RGB
 from du1.flow import Flow
-from du1.melody import Melodies
+from du1.melody import Melody
 from du1.utils import decider
 
 options = {
     1: RGB,
     2: Flow,
-    3: Melodies
+    3: Melody
 }
 
 
