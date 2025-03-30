@@ -1,4 +1,15 @@
+"""Utilities."""
+
 def inputer(message: str, min_value: int, max_value: int) -> int:
+    """Asks user to choose numeric value from range.
+
+    If the user enters invalid value, it asks again
+
+    :param message: Text, that displays before asking user to input value
+    :param min_value: Minimal value that user can choose from (included)
+    :param max_value: Maximal value that user can choose from (excluded)
+    :return: Returns the value that user entered
+    """
     print(message)
 
     while True:
@@ -18,6 +29,15 @@ def inputer(message: str, min_value: int, max_value: int) -> int:
 
 
 def decider(message: str, *args) -> int:
+    """Asks user to choose from certain values.
+
+    Used when it's necessary to display additional message, not only to choose numerical value
+    Uses "inputer" function
+
+    :param message: Text that displays before asking user to input value
+    :param args: Values to choose from. Displays them line by line, with number before them
+    :return: Returns the value that user entered
+    """
     local_message: str = f"{message}: \n"
     local_message += "\n".join([f"\t{i + 1}. {args[i]}" for i in range(len(args))])
 
