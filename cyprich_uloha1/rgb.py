@@ -1,6 +1,6 @@
 from machine import Pin
-from du1.color import Color
-from du1.utils import decider
+from cyprich_uloha1.color import Color
+from cyprich_uloha1.utils import decider
 
 class RGB:
     def __init__(self):
@@ -19,7 +19,8 @@ class RGB:
 
     def run(self):
         print("\n--- RGB ---")
-        user = decider("Choose one from colors to show", *[i.name for i in self._colors]) - 1
+        user: int = decider("Choose one from colors to show", *[i.name for i in self._colors]) - 1
+
         self._r.value(self._colors[user].r)
         self._g.value(self._colors[user].g)
         self._b.value(self._colors[user].b)

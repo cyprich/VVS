@@ -1,3 +1,4 @@
-from du1.main import main
+from cyprich_uloha1.main import main
 
-main()
+if __name__ == '__main__':
+    main()

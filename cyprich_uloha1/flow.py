@@ -1,21 +1,23 @@
 import time
-from machine import PWM, Timer
 
-from du1.utils import inputer
+from machine import PWM
+
+from cyprich_uloha1.utils import inputer
+
 
 class Flow:
-    def __init__(self):
+    def __init__(self) -> None:
         self._max_duty = 65535
         self._r: PWM = PWM(21, freq=120, duty_u16=0)
         self._g: PWM = PWM(11, freq=120, duty_u16=0)
         self._b: PWM = PWM(10, freq=120, duty_u16=0)
 
-    def _change_color(self, r: int, g: int, b: int):
+    def _change_color(self, r: int, g: int, b: int) -> None:
         self._r.duty_u16(r)
         self._g.duty_u16(g)
         self._b.duty_u16(b)
 
-    def run(self):
+    def run(self) -> None:
         speed = 8
         user_time = inputer("How many seconds you want this effect to take?", 1, 6)
 

@@ -1,8 +1,8 @@
 from machine import Pin, PWM
 from utime import sleep
 
-from du1.melodies import *  # import melodies.py
-from du1.notes import *  # import notes.py
+from cyprich_uloha1.melodies import *  # import melodies.py
+from cyprich_uloha1.notes import *  # import notes.py
 
 buzzer = PWM(Pin(5), freq=30000)  # pin where buzzer is connected
 

@@ -1,10 +1,9 @@
 def inputer(message: str, min_value: int, max_value: int) -> int:
-    result: int | None = None
-
     print(message)
+
     while True:
         try:
-            result = int(input(f"Your option ({min_value}-{max_value - 1}): "))
+            result: int = int(input(f"Your option ({min_value}-{max_value - 1}): "))
             if result not in range(min_value, max_value):
                 raise IndexError
             break
@@ -19,7 +18,7 @@ def inputer(message: str, min_value: int, max_value: int) -> int:
 
 
 def decider(message: str, *args) -> int:
-    local_message = f"{message}: \n"
+    local_message: str = f"{message}: \n"
     local_message += "\n".join([f"\t{i + 1}. {args[i]}" for i in range(len(args))])
 
-    return inputer(local_message, 1, len(args)+1)
+    return inputer(local_message, 1, len(args) + 1)
