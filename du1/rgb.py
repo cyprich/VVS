@@ -1,5 +1,5 @@
 from machine import Pin
-from du1.Color import Color
+from du1.color import Color
 from du1.utils import decider
 
 class RGB:
