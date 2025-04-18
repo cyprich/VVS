@@ -1,4 +1,7 @@
-from cyprich_uloha2.main import main
+def main():
+    pass
+
+
 
 if __name__ == '__main__':
     main()
