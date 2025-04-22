@@ -5,12 +5,12 @@ from cyprich_uloha2.utils import decider
 class Communicator:
     def __init__(self):
         mode: int = decider("Choose mode in which you want to operate", "Transmitter", "Node", "Receiver")
-        functions = self.transmitter, self.node, self.receiver
+        functions = [self.transmitter, self.node, self.receiver]
         functions[mode-1]()
 
 
     @staticmethod
-    def transmitter(self):
+    def transmitter():
         uart = UART(1, tx=Pin(4), rx=Pin(5))
         while True:
             try:
