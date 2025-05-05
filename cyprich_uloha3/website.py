@@ -27,9 +27,9 @@ class Website:
         self._page_vars = {
             "photoresistor_value": self._photoresistor.get_value(),
             "photoresistor_percent": round(self._photoresistor.get_percent(), 2),
-            "r": 0,
-            "g": 0,
-            "b": 0,
+            "r": 1,
+            "g": 2,
+            "b": 3,
         }
 
         self._endpoints()

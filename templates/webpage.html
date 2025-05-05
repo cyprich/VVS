@@ -6,19 +6,48 @@
     <title>Cyprich - Uloha 3 - VVS</title>
     <meta name="author" content="Peter Cyprich">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .peripherals {
+            background: #ddd;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+        .peripherals > div {
+            background: #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            padding: 1em;
+        }
+    </style>
 </head>
 <body style="width: 100vw; height: 100vh; background: #eee; margin: 0; padding: 2em; display: flex; flex-direction: column">
     <h1>Uloha 3</h1>
     <h3>Vyvoj Vstavanych Systemov - Peter Cyprich</h3>
-    <div style="background: #ddd; padding: 1em;">
-        <div style="display: flex; align-items: center; gap: 2em">
-            <p>Photoresistor value: {{photoresistor_value}} ({{photoresistor_percent}}%)</p>
-            <a href="/photoresistor"><button>Update</button></a>
+    <div class="peripherals">
+        <div>
+            <h2>Fotorezistor</h2>
+            <p>Namerana hodnota: {{photoresistor_value}} ({{photoresistor_percent}}%)</p>
+            <a href="/photoresistor"><button>Aktualizovat</button></a>
         </div>
         <div>
-            <p>r: {{r}}</p>
-            <p>g: {{g}}</p>
-            <p>b: {{b}}</p>
+            <h2>RGB dioda</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.5em">
+                <label for="r">
+                    Hodnota R (cervena zlozka)
+                    <input type="number" name="r" id="r" value="{{r}}" min="0" max="255">
+                </label>
+                <label for="g">
+                    Hodnota G (cervena zlozka)
+                    <input type="number" name="g" id="g" value="{{g}}" min="0" max="255">
+                </label>
+                <label for="b">
+                    Hodnota B (cervena zlozka)
+                    <input type="number" name="b" id="b" value="{{b}}" min="0" max="255">
+                </label>
+            </div>
         </div>
     </div>
 </body>

@@ -1,7 +1,8 @@
-"""Second part/option of the assignment.
+"""Manages the photoresistor.
 
-Changes the color of RGB LED based on value taken from photoresistor
-Uses timers to measure and stop this effect on RGB LED
+You can read the value from photoresistor in two ways:
+- Absolute value: returns integer, as value from photoresistor in u16 units
+- Relative value (percen): returns float, as the percentage of light, where 100% is full bright and 0% is full dark
 """
 from machine import Pin, ADC
 
