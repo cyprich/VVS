@@ -1,6 +1,7 @@
 import os
 from microdot.microdot import Microdot, Response
 from microdot.utemplate import Template
+from cyprich_uloha3.photoresistor import Photoresistor
 
 class Website:
     def __init__(self):
@@ -19,12 +20,16 @@ class Website:
         self._webpage = Template("webpage.html")
         Response.default_content_type = "text/html"
 
+        # from previous homeworks
+        self._photoresistor = Photoresistor()
+
         # defining variables
         self._page_vars = {
-            "variable_parameter_1": "hello",
-            "variable_html": "",
-            "variable_css": "",
-            "variable_c": "checked",
+            "photoresistor_value": self._photoresistor.get_value(),
+            "photoresistor_percent": round(self._photoresistor.get_percent(), 2),
+            "r": 0,
+            "g": 0,
+            "b": 0,
         }
 
         self._endpoints()
@@ -37,18 +42,13 @@ class Website:
         async def index(request):
             return self.generate_webpage()
 
-        @self._app.route("/button_1")
-        async def button(request):
-            self._page_vars["variable_parameter_1"] = "Button was pressed"
+        @self._app.route("/photoresistor")
+        async def photoresistor(request):
+            self._page_vars["photoresistor_value"] = self._photoresistor.get_value()
+            self._page_vars["photoresistor_percent"] = round(self._photoresistor.get_percent(), 2)
             return self.generate_webpage()
 
 
     def generate_webpage(self):
         print(self._page_vars)
-        return self._webpage.render(
-            parameter_1 = self._page_vars["variable_parameter_1"],
-            fplf_html=self._page_vars["variable_html"],
-            fplf_css=self._page_vars["variable_css"],
-            fplf_C=self._page_vars["variable_c"],
-        )
-
+        return self._webpage.render(**self._page_vars)
