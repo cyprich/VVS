@@ -1,4 +1,4 @@
-{% args photoresistor_value, photoresistor_percent, rgb_r, rgb_g, rgb_b %}
+{% args photoresistor_value, photoresistor_percent, rgb_r, rgb_g, rgb_b, serial_1_r, serial_1_g, serial_1_b, serial_2_r, serial_2_g, serial_2_b, serial_3_r, serial_3_g, serial_3_b %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +22,16 @@
             gap: 0.5em;
             padding: 1em;
         }
+
+        .peripherals form {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .peripherals form input[type="submit"] {
+             width: max-content
+        }
     </style>
 </head>
 <body style="width: 100vw; height: 100vh; background: #eee; margin: 0; padding: 2em; display: flex; flex-direction: column">
@@ -30,7 +40,7 @@
 <div class="peripherals">
     <div>
         <h2>RGB LED diode</h2>
-        <form action="rgb_led_form" style="display: flex; flex-direction: column; gap: 1em">
+        <form action="rgb_led_form">
             <label for="rgb_r">
                 Value of Red channel [%]
                 <input type="number" name="rgb_r" id="rgb_r" value="{{rgb_r}}" min="0" max="100">
@@ -43,7 +53,49 @@
                 Value of Blue channel [%]
                 <input type="number" name="rgb_b" id="rgb_b" value="{{rgb_b}}" min="0" max="100">
             </label>
-            <input type="submit" value="Update" style="width: max-content; padding: auto 2em">
+            <input type="submit" value="Update">
+        </form>
+    </div>
+    <div>
+        <h2>Serial LED</h2>
+        <form action="serial_form">
+            <div>
+                <p>Serial LED #1</p>
+                <label for="serial_1_r">
+                    R <input type="number" name="serial_1_r" id="serial_1_r" value="{{serial_1_r}}" min="0" max="100">
+                </label>
+                <label for="serial_1_g">
+                    G <input type="number" name="serial_1_g" id="serial_1_g" value="{{serial_1_g}}" min="0" max="100">
+                </label>
+                <label for="serial_1_b">
+                    B <input type="number" name="serial_1_b" id="serial_1_b" value="{{serial_1_b}}" min="0" max="100">
+                </label>
+            </div>
+            <div>
+                <p>Serial LED #2</p>
+                <label for="serial_2_r">
+                    R <input type="number" name="serial_2_r" id="serial_2_r" value="{{serial_2_r}}" min="0" max="100">
+                </label>
+                <label for="serial_2_g">
+                    G <input type="number" name="serial_2_g" id="serial_2_g" value="{{serial_2_g}}" min="0" max="100">
+                </label>
+                <label for="serial_2_b">
+                    B <input type="number" name="serial_2_b" id="serial_2_b" value="{{serial_2_b}}" min="0" max="100">
+                </label>
+            </div>
+            <div>
+                <p>Serial LED #3</p>
+                <label for="serial_3_r">
+                    R <input type="number" name="serial_3_r" id="serial_3_r" value="{{serial_3_r}}" min="0" max="100">
+                </label>
+                <label for="serial_3_g">
+                    G <input type="number" name="serial_3_g" id="serial_3_g" value="{{serial_3_g}}" min="0" max="100">
+                </label>
+                <label for="serial_3_b">
+                    B <input type="number" name="serial_3_b" id="serial_3_b" value="{{serial_3_b}}" min="0" max="100">
+                </label>
+            </div>
+            <input type="submit" value="Update">
         </form>
     </div>
     <div>

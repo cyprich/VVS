@@ -1,6 +1,6 @@
 import os
-
 from cyprich_uloha3.rgb_led import RGBLED
+from cyprich_uloha3.serial_led import SerialLED
 from microdot.microdot import Microdot, Response
 from microdot.utemplate import Template
 from cyprich_uloha3.photoresistor import Photoresistor
@@ -25,6 +25,7 @@ class Website:
         # peripherals
         self._photoresistor = Photoresistor()
         self._rgbled = RGBLED()
+        self._serialled = SerialLED()
 
         # defining variables
         self._page_vars = {
@@ -33,6 +34,15 @@ class Website:
             "rgb_r": 0,
             "rgb_g": 0,
             "rgb_b": 0,
+            "serial_1_r": 0,
+            "serial_1_g": 0,
+            "serial_1_b": 0,
+            "serial_2_r": 0,
+            "serial_2_g": 0,
+            "serial_2_b": 0,
+            "serial_3_r": 0,
+            "serial_3_g": 0,
+            "serial_3_b": 0,
         }
 
         self._endpoints()
@@ -66,6 +76,21 @@ class Website:
 
             return self.generate_webpage()
 
+        @self._app.route("/serial_form")
+        async def serial_form(request):
+            fields = [f"serial_{i}_{j}" for i in [1, 2, 3] for j in ["r", "g", "b"] ]
+            values = [int(request.args[i]) / 100 for i in fields]
+
+            self._serialled.set(0, values[0], values[1], values[2])
+            self._serialled.set(1, values[3], values[4], values[5])
+            self._serialled.set(2, values[6], values[7], values[8])
+
+            for i in range(len(fields)):
+                self._page_vars[fields[i]] = int(values[i] * 100)
+
+            return self.generate_webpage()
+
 
     def generate_webpage(self):
+        print(self._page_vars)
         return self._webpage.render(**self._page_vars)
