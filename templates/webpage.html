@@ -1,4 +1,4 @@
-{% args photoresistor_value, photoresistor_percent, r, g, b %}
+{% args photoresistor_value, photoresistor_percent, rgb_r, rgb_g, rgb_b %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +14,7 @@
             flex-direction: column;
             gap: 1em;
         }
+
         .peripherals > div {
             background: #ccc;
             display: flex;
@@ -24,31 +25,34 @@
     </style>
 </head>
 <body style="width: 100vw; height: 100vh; background: #eee; margin: 0; padding: 2em; display: flex; flex-direction: column">
-    <h1>Uloha 3</h1>
-    <h3>Vyvoj Vstavanych Systemov - Peter Cyprich</h3>
-    <div class="peripherals">
-        <div>
-            <h2>Fotorezistor</h2>
-            <p>Namerana hodnota: {{photoresistor_value}} ({{photoresistor_percent}}%)</p>
-            <a href="/photoresistor"><button>Aktualizovat</button></a>
-        </div>
-        <div>
-            <h2>RGB dioda</h2>
-            <div style="display: flex; flex-direction: column; gap: 0.5em">
-                <label for="r">
-                    Hodnota R (cervena zlozka)
-                    <input type="number" name="r" id="r" value="{{r}}" min="0" max="255">
-                </label>
-                <label for="g">
-                    Hodnota G (cervena zlozka)
-                    <input type="number" name="g" id="g" value="{{g}}" min="0" max="255">
-                </label>
-                <label for="b">
-                    Hodnota B (cervena zlozka)
-                    <input type="number" name="b" id="b" value="{{b}}" min="0" max="255">
-                </label>
-            </div>
-        </div>
+<h1>Uloha 3</h1>
+<h3>Vyvoj Vstavanych Systemov - Peter Cyprich</h3>
+<div class="peripherals">
+    <div>
+        <h2>RGB LED diode</h2>
+        <form action="rgb_led_form" style="display: flex; flex-direction: column; gap: 1em">
+            <label for="rgb_r">
+                Value of Red channel [%]
+                <input type="number" name="rgb_r" id="rgb_r" value="{{rgb_r}}" min="0" max="100">
+            </label>
+            <label for="rgb_g">
+                Value of Green channel [%]
+                <input type="number" name="rgb_g" id="rgb_g" value="{{rgb_g}}" min="0" max="100">
+            </label>
+            <label for="rgb_b">
+                Value of Blue channel [%]
+                <input type="number" name="rgb_b" id="rgb_b" value="{{rgb_b}}" min="0" max="100">
+            </label>
+            <input type="submit" value="Update" style="width: max-content; padding: auto 2em">
+        </form>
     </div>
+    <div>
+        <h2>Photoresistor</h2>
+        <p>Measured value: {{photoresistor_value}} ({{photoresistor_percent}}%)</p>
+        <a href="/photoresistor">
+            <button>Update</button>
+        </a>
+    </div>
+</div>
 </body>
 </html>
