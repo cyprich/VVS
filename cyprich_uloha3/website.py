@@ -1,4 +1,7 @@
 import os
+
+from cyprich_uloha3.melodies import melody
+from cyprich_uloha3.play import playsong, set_volume
 from cyprich_uloha3.rgb_led import RGBLED
 from cyprich_uloha3.serial_led import SerialLED
 from microdot.microdot import Microdot, Response
@@ -43,6 +46,8 @@ class Website:
             "serial_3_r": 0,
             "serial_3_g": 0,
             "serial_3_b": 0,
+            "buzzer": 1,
+            "buzzer_volume": 200,
         }
 
         self._endpoints()
@@ -87,6 +92,16 @@ class Website:
 
             for i in range(len(fields)):
                 self._page_vars[fields[i]] = int(values[i] * 100)
+
+            return self.generate_webpage()
+
+        @self._app.route("/buzzer_form")
+        async def buzzer_form(request):
+            self._page_vars["buzzer"] = int(request.args["buzzer"]) - 1
+            self._page_vars["buzzer_volume"] = int(request.args["buzzer_volume"])
+
+            set_volume(self._page_vars["buzzer_volume"])
+            playsong(melody[self._page_vars["buzzer"]])
 
             return self.generate_webpage()
 

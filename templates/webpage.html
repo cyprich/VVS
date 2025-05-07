@@ -1,4 +1,4 @@
-{% args photoresistor_value, photoresistor_percent, rgb_r, rgb_g, rgb_b, serial_1_r, serial_1_g, serial_1_b, serial_2_r, serial_2_g, serial_2_b, serial_3_r, serial_3_g, serial_3_b %}
+{% args photoresistor_value, photoresistor_percent, rgb_r, rgb_g, rgb_b, serial_1_r, serial_1_g, serial_1_b, serial_2_r, serial_2_g, serial_2_b, serial_3_r, serial_3_g, serial_3_b, buzzer, buzzer_volume %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +7,10 @@
     <meta name="author" content="Peter Cyprich">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        * {
+            font-family: arial, sans-serif;
+        }
+
         .peripherals {
             background: #ddd;
             padding: 1em;
@@ -96,6 +100,37 @@
                 </label>
             </div>
             <input type="submit" value="Update">
+        </form>
+    </div>
+    <div>
+        <h2>Buzzer</h2>
+        <p>Play melodies with buzzer</p>
+        <form action="buzzer_form">
+            <label for="buzzer_1">
+                <input type="radio" name="buzzer" id="buzzer_1" value="1" checked>
+                Star Trek intro
+            </label>
+            <label for="buzzer_2">
+                <input type="radio" name="buzzer" id="buzzer_2" value="2">
+                Silent Night
+            </label>
+            <label for="buzzer_3">
+                <input type="radio" name="buzzer" id="buzzer_3" value="3">
+                Pacman
+            </label>
+            <label for="buzzer_4">
+                <input type="radio" name="buzzer" id="buzzer_4" value="4">
+                Ode an die Freude
+            </label>
+            <label for="buzzer_5">
+                <input type="radio" name="buzzer" id="buzzer_5" value="5">
+                Star Wars theme
+            </label>
+            <label for="buzzer_volume" style="display: flex; align-items: center">
+                Volume
+                <input type="range" name="buzzer_volume" id="buzzer_volume" min="0" max="1000" value="{{buzzer_volume}}">
+            </label>
+            <input type="submit" value="Play">
         </form>
     </div>
     <div>
