@@ -1,4 +1,4 @@
-"""Assignment 2 from subject "Vyvoj vstavanych systemov.
+"""Assignment 2 from subject "Vyvoj vstavanych systemov".
 
 Author: Peter Cyprich
 """

@@ -1,15 +1,24 @@
+"""Assignment 3 from subject "Vyvoj vstavanych systemov".
+
+Author: Peter Cyprich
+"""
+from machine import lightsleep
 from cyprich_uloha3.ap import AP
 from cyprich_uloha3.website import Website
-from machine import lightsleep
 
-def main():
-    sleep_ms = 2000
+
+def main() -> None:
+    """Run the program.
+
+    :return: None
+    """
+    sleep_ms: int = 2000
     lightsleep(sleep_ms)
 
-    ap = AP()
+    ap: AP = AP()
     ap.ask()
 
-    website = Website()
+    website: Website = Website()
     website.run()
 
     while True:

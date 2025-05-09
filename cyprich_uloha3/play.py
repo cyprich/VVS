@@ -12,7 +12,7 @@ volume = 0  # set volume to a value between 0 and 1000
 # functions to play the melodies
 
 def playtone(frequency):
-    buzzer.duty_u16(volume) # maximal volume at duty cycle equal to 32768
+    buzzer.duty_u16(volume)  # maximal volume at duty cycle equal to 32768
     buzzer.freq(frequency)
 
 
@@ -21,7 +21,8 @@ def be_quiet():
 
 
 def duration(tempo, t):
-    # calculate the duration of a whole note in milliseconds (60s/tempo)*4 beats
+    # calculate the duration of a whole note in milliseconds (60s/tempo)*4
+    # beats
     wholenote = (60000 / tempo) * 4
 
     # calculate the duration of the current note
@@ -53,12 +54,15 @@ def playsong(mysong):
             else:
                 playtone(notes[mysong[thisNote]])
 
-            sleep(noteduration * 0.9 / 1000)  # we only play the note for 90% of the duration...
+            # we only play the note for 90% of the duration...
+            sleep(noteduration * 0.9 / 1000)
             be_quiet()
-            sleep(noteduration * 0.1 / 1000)  # ... and leave 10% as a pause between notes
+            # ... and leave 10% as a pause between notes
+            sleep(noteduration * 0.1 / 1000)
 
-    except:  # make sure the buzzer stops making noise when something goes wrong or when the script is stopped
+    except BaseException:  # make sure the buzzer stops making noise when something goes wrong or when the script is stopped
         be_quiet()
+
 
 def set_volume(new_volume):
     """Set the volume of the music."""
