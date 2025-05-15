@@ -12,8 +12,10 @@ def main() -> None:
 
     :return: None
     """
-    sleep_ms: int = 2000
-    lightsleep(sleep_ms)
+    sleep_seconds: int = 5
+    print(f"Entering sleep for {sleep_seconds} seconds")
+    lightsleep(sleep_seconds * 1000)
+    print("Woken up from sleep")
 
     ap: AP = AP()
     ap.ask()
