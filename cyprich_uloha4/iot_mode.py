@@ -21,7 +21,7 @@ class IotMode:
 
         self.database_url = "https://vvs-uloha4-default-rtdb.europe-west1.firebasedatabase.app/"
         firebase.setURL(self.database_url)
-        self.database_path = "measured"
+        self.database_field = "measured"
 
         self.tigger_pin = 15
         self.echo_pin = 23
@@ -30,8 +30,9 @@ class IotMode:
 
     def run(self):
         print("\nRunning IoT mode")
-        print(f"Measuring distance every {self.interval} seconds and sending to database")
-        print(f"HCSR04 Pins: Tigger={self.tigger_pin}, Echo={self.echo_pin}")
+        print(f"Measuring distance every {self.interval} seconds and sending to Firebase")
+        print(f"Firebase field name: {self.database_field}")
+        print(f"HCSR04 Pin numbers: Tigger={self.tigger_pin}, Echo={self.echo_pin}")
         print("Press ctrl+c to stop\n")
         while True:
             try:
@@ -39,7 +40,7 @@ class IotMode:
                 print(f"Measured distance: {value} mm")
 
                 print("\tSending to Firebase")
-                firebase.addto(self.database_path, value)
+                firebase.addto(self.database_field, value)
 
                 print(f"\tMeasuring again in {self.interval}", end='')
                 time.sleep(1)
@@ -51,4 +52,5 @@ class IotMode:
             except KeyboardInterrupt:
                 print("\n\nStopping...")
                 break
+                
         self._wifi.disconnect()
