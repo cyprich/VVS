@@ -1,0 +1,268 @@
+[
+    {
+        "id": "923bf78ee43401f7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "65041587c606cd17",
+        "type": "aedes broker",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": null,
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "certname": "",
+        "keyname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "usetls": false,
+        "x": 290,
+        "y": 80,
+        "wires": [
+            [
+                "393c787da24b7e68"
+            ],
+            [
+                "2739783a73dc5869"
+            ]
+        ]
+    },
+    {
+        "id": "393c787da24b7e68",
+        "type": "debug",
+        "z": "923bf78ee43401f7",
+        "name": "Aedis MQTT broker - events",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2739783a73dc5869",
+        "type": "debug",
+        "z": "923bf78ee43401f7",
+        "name": "Aedis MQTT broker - publish",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "081feb338bce1f8e",
+        "type": "mqtt in",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "topic": "listen_1",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f82e7fb9bf67d5f4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "8f33fddccc5d309a"
+            ]
+        ]
+    },
+    {
+        "id": "d74b3547e247f70c",
+        "type": "mqtt out",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "topic": "send_1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f82e7fb9bf67d5f4",
+        "x": 560,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8f33fddccc5d309a",
+        "type": "debug",
+        "z": "923bf78ee43401f7",
+        "name": "listen_1 messages",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7bca526e711a3f2b",
+        "type": "inject",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "abcd",
+        "payloadType": "str",
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "d74b3547e247f70c"
+            ]
+        ]
+    },
+    {
+        "id": "12ae38a5621cdd9a",
+        "type": "mqtt out",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "topic": "send_2",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f82e7fb9bf67d5f4",
+        "x": 560,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f53111dc391e3438",
+        "type": "inject",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "efgh",
+        "payloadType": "str",
+        "x": 250,
+        "y": 280,
+        "wires": [
+            [
+                "12ae38a5621cdd9a"
+            ]
+        ]
+    },
+    {
+        "id": "104bd87d082e4de4",
+        "type": "mqtt in",
+        "z": "923bf78ee43401f7",
+        "name": "",
+        "topic": "listen_2",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f82e7fb9bf67d5f4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "079b6e7190f0c316"
+            ]
+        ]
+    },
+    {
+        "id": "079b6e7190f0c316",
+        "type": "debug",
+        "z": "923bf78ee43401f7",
+        "name": "listen_2 messages",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f82e7fb9bf67d5f4",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
