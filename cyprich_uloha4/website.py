@@ -1,7 +1,6 @@
 """Website module.
 
-Creates website, and makes user to control peripherals (LED's, buzzer,
-photoresistor) through web interface with the use of Microdot library.
+Creates website, and makes user able to configure needed things.
 """
 import os
 
@@ -43,6 +42,7 @@ class Website:
 
         @self._app.route("/update")
         async def update(request):
+            """Handle update."""
             a = request.args
             Configuration.ssid = a["ssid"]
             Configuration.password = a["password"]
@@ -63,7 +63,7 @@ class Website:
         self._app.run(port=port)
 
     def generate_webpage(self):
-        """Generate the webpage, uses variables defined in self._page_vars."""
+        """Generate the webpage."""
         return self._webpage.render(
             measure_interval=Configuration.measure_interval,
             ssid=Configuration.ssid,
