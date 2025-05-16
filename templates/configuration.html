@@ -1,0 +1,80 @@
+{% args measure_interval, ssid, password, url, field, trigger_pin, echo_pin %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyprich - Uloha 4 - VVS</title>
+    <meta name="author" content="Peter Cyprich">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: arial, sans-serif;
+        }
+
+        .peripherals {
+            background: #ddd;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .peripherals > div {
+            background: #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            padding: 1em;
+        }
+
+        .peripherals form {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .peripherals form input[type="submit"] {
+            width: max-content
+        }
+    </style>
+</head>
+<body>
+<h1>Uloha 4</h1>
+<h3>Vyvoj Vstavanych Systemov - Peter Cyprich</h3>
+<div class="peripherals">
+    <h2>Configuration</h2>
+    <form action="update">
+        <label for="interval">
+            Measure interval [seconds]
+            <input type="number" id="interval" name="interval" value="{{measure_interval}}" min="1">
+        </label>
+        <label for="ssid">
+            Wifi SSID
+            <input type="text" id="ssid" name="ssid" value="{{ssid}}">
+        </label>
+        <label for="password">
+            Wifi Password
+            <input type="text" id="password" name="password" value="{{password}}">
+        </label>
+        <label for="url">
+            Firebase URL
+            <input type="text" id="url" name="url" value="{{url}}">
+        </label>
+        <label for="field">
+            Firebase field name
+            <input type="text" id="field" name="field" value="{{field}}">
+        </label>
+        <label for="trigger_pin">
+            Ultrasound Trigger pin number
+            <input type="number" id="trigger_pin" name="trigger_pin" value="{{trigger_pin}}" min="1" max="23">
+        </label>
+        <label for="echo_pin">
+            Ultrasound Echo pin number
+             <input type="number" id="echo_pin" name="echo_pin" value="{{echo_pin}}" min="1" max="23">
+        </label>
+        <input type="submit" value="Update configuration">
+    </form>
+</div>
+<a href="{{url}}" target="_blank">Open Database</a>
+</body>
+</html>

@@ -2,6 +2,8 @@ import network
 import binascii
 import time
 
+from cyprich_uloha4.configuration import Configuration
+
 
 class WiFi:
     def __init__(self):
@@ -21,15 +23,18 @@ class WiFi:
             if i[4] == 0:
                 open_ssids.append(i[0].decode())
         
-    def connect_to_network(self, ssid: str | None = None, password: str | None = None) -> bool:
+    def connect_to_network(self) -> bool:
         if self._nic.isconnected():
             self._nic.disconnect()
 
-        if ssid is None or password is None:
+        if Configuration.ssid == "":
             ssid = input("\nEnter SSID: ").strip(" ")
             password= input("Enter password: ")
+
+            Configuration.ssid = ssid
+            Configuration.password = password
         
-        self._nic.connect(ssid, password)
+        self._nic.connect(Configuration.ssid, Configuration.password)
 
         print("Trying to connect", end='')
         counter: int = 0

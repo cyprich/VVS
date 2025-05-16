@@ -1,6 +1,7 @@
 import sys
 import time
 
+from cyprich_uloha4.configuration import Configuration
 from cyprich_uloha4.wifi import WiFi
 from external_libraries.hcsr04 import HCSR04
 import firebase.firebase_library.ufirebase as firebase
@@ -8,6 +9,42 @@ import firebase.firebase_library.ufirebase as firebase
 class IotMode:
     def __init__(self):
         self._wifi = WiFi()
+
+        firebase.setURL(Configuration.db_url)
+
+        self._ultrasound = HCSR04(Configuration.trigger_pin, Configuration.echo_pin)
+
+    def run(self):
+        self.config_wifi()
+
+        print("\nRunning IoT mode")
+        print(f"Measuring distance every {Configuration.measure_interval} seconds and sending to Firebase")
+        print(f"Firebase field name: {Configuration.db_field}")
+        print(f"HCSR04 Pin numbers: Tigger={Configuration.trigger_pin}, Echo={Configuration.echo_pin}")
+        print("Press ctrl+c to stop\n")
+        while True:
+            try:
+                value: int = self._ultrasound.distance_mm()
+                print(f"Measured distance: {value} mm")
+
+                print("\tSending to Firebase")
+                firebase.addto(Configuration.db_field, value)
+
+                interval = Configuration.measure_interval
+                print(f"\tMeasuring again in {interval}", end='')
+                time.sleep(1)
+                for i in range(interval - 1):
+                    print(f", {interval - i - 1}", end='')
+                    time.sleep(1)
+                print("\n")
+
+            except KeyboardInterrupt:
+                print("\n\nStopping...")
+                break
+                
+        self._wifi.disconnect()
+
+    def config_wifi(self):
         self._wifi.scan_networks()
 
         while True:
@@ -19,38 +56,6 @@ class IotMode:
             except KeyboardInterrupt:
                 sys.exit(1)
 
-        self.database_url = "https://vvs-uloha4-default-rtdb.europe-west1.firebasedatabase.app/"
-        firebase.setURL(self.database_url)
-        self.database_field = "measured"
-
-        self.tigger_pin = 15
-        self.echo_pin = 23
-        self._ultrasound = HCSR04(self.tigger_pin, self.echo_pin)
-        self.interval: int = 10
-
-    def run(self):
-        print("\nRunning IoT mode")
-        print(f"Measuring distance every {self.interval} seconds and sending to Firebase")
-        print(f"Firebase field name: {self.database_field}")
-        print(f"HCSR04 Pin numbers: Tigger={self.tigger_pin}, Echo={self.echo_pin}")
-        print("Press ctrl+c to stop\n")
-        while True:
-            try:
-                value: int = self._ultrasound.distance_mm()
-                print(f"Measured distance: {value} mm")
-
-                print("\tSending to Firebase")
-                firebase.addto(self.database_field, value)
-
-                print(f"\tMeasuring again in {self.interval}", end='')
-                time.sleep(1)
-                for i in range(self.interval - 1):
-                    print(f", {self.interval - i - 1}", end='')
-                    time.sleep(1)
-                print("\n")
-
-            except KeyboardInterrupt:
-                print("\n\nStopping...")
-                break
-                
+    def stop(self):
         self._wifi.disconnect()
+        self._wifi.deinit()
