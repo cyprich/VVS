@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semestralna Praca - Peter Cyprich</title>
+    <style>
+        * {
+            transition: all 0.2s ease 0s;
+        }
+
+        .grid > button {
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+            border: none;
+
+            &:hover {
+                filter: brightness(0.9);
+            }
+
+            &:active {
+                filter: brightness(1.2);
+                transform: scale(0.9);
+            }
+
+            &>p {
+                font-weight: 900;
+                font-size: 1.2em;
+                /*color: white;*/
+            }
+
+            &:nth-child(-n+3)>p {
+                color: white
+            }
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Semestralna Praca</h1>
+    <h2>Peter Cyprich</h2>
+</div>
+<div style="display: grid; border: 1px solid black; width: max-content" class="grid">
+    <button style="background: red; grid-column-start: 2; grid-row-start: 1">
+        <p>Red</p>
+    </button>
+    <button style="background: green; grid-column-start: 1; grid-row-start: 2">
+        <p>Green</p>
+    </button>
+    <button style="background: blue; grid-column-start: 3; grid-row-start: 2">
+        <p>Blue</p>
+    </button>
+    <button style="background: yellow; grid-column-start: 2; grid-row-start: 3">
+        <p>Yellow</p>
+    </button>
+</div>
+<div>
+    <a href="/submit">
+        <button>Submit</button>
+    </a>
+</div>
+</body>
+</html>
