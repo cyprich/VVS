@@ -3,62 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Semestralna Praca - Peter Cyprich</title>
+    <title>Semestrálna Práca - Peter Cyprich</title>
     <style>
         * {
             transition: all 0.2s ease 0s;
+            font-family: sans-serif;
         }
 
-        .grid > button {
-            width: 100px;
-            height: 100px;
-            padding: 20px;
-            border: none;
+        h2 {
+            padding: 0;
+            margin: 0;
+        }
 
-            &:hover {
-                filter: brightness(0.9);
-            }
+        button {
+            padding: 1em 2em;
+        }
 
-            &:active {
-                filter: brightness(1.2);
-                transform: scale(0.9);
-            }
+        .grid {
+            width: max-content;
+            display: grid;
+            gap: 1em;
 
-            &>p {
-                font-weight: 900;
-                font-size: 1.2em;
-                /*color: white;*/
-            }
+            a {
+                width: 100px;
+                height: 100px;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-            &:nth-child(-n+3)>p {
-                color: white
+                p {
+                    font-weight: 900;
+                    font-size: 1.2em;
+                    text-decoration: none;
+                    text-underline: none;
+                }
+
+                &:hover {
+                    filter: brightness(0.9);
+                }
+
+                &:active {
+                    filter: brightness(1.2);
+                    transform: scale(0.9);
+                }
+
+                &:nth-child(1) {
+                    background: red;
+                    grid-column-start: 2;
+                    grid-row-start: 1;
+                }
+
+                &:nth-child(2) {
+                    background: green;
+                    grid-column-start: 1;
+                    grid-row-start: 2;
+                }
+
+                &:nth-child(3) {
+                    background: blue;
+                    grid-column-start: 3;
+                    grid-row-start: 2;
+                }
+
+                &:nth-child(4) {
+                    background: yellow;
+                    grid-column-start: 2;
+                    grid-row-start: 3;
+                }
+
+                &:nth-child(5) {
+                    grid-column-start: 2;
+                    grid-row-start: 4;
+                }
+
+                &:nth-child(-n+3) p {
+                    color: white
+                }
             }
         }
+
+        .separator {
+            width: 1px;
+            height: auto;
+            background: black;
+        }
+
     </style>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2em">
 <div>
     <h1>Semestralna Praca</h1>
     <h2>Peter Cyprich</h2>
 </div>
-<div style="display: grid; border: 1px solid black; width: max-content" class="grid">
-    <button style="background: red; grid-column-start: 2; grid-row-start: 1">
-        <p>Red</p>
-    </button>
-    <button style="background: green; grid-column-start: 1; grid-row-start: 2">
-        <p>Green</p>
-    </button>
-    <button style="background: blue; grid-column-start: 3; grid-row-start: 2">
-        <p>Blue</p>
-    </button>
-    <button style="background: yellow; grid-column-start: 2; grid-row-start: 3">
-        <p>Yellow</p>
-    </button>
-</div>
-<div>
-    <a href="/submit">
-        <button>Submit</button>
-    </a>
-</div>
+<main>
+    <div style="display: flex; gap: 3em; height: max-content">
+        <div class="grid">
+            <a href="/red" style="">
+                <p>Červená</p>
+            </a>
+            <a href="/green">
+                <p>Zelená</p>
+            </a>
+            <a href="/blue">
+                <p>Modrá</p>
+            </a>
+            <a href="/yellow">
+                <p>Žltá</p>
+            </a>
+            <a href="/submit">
+                <button class="submit-button">Potvrdiť</button>
+            </a>
+        </div>
+        <div class="separator"></div>
+        <div class="help"></div>
+    </div>
+</main>
 </body>
 </html>

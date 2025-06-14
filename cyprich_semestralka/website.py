@@ -42,6 +42,32 @@ class Website:
             """Handle the root endpoint."""
             return self.generate_webpage()
 
+        @self._app.route("/submit")
+        async def submit(request):
+            # TODO
+            return self.generate_webpage()
+
+        @self._app.route("/red")
+        async def red(request):
+            # TODO
+            return self.generate_webpage()
+
+        @self._app.route("/green")
+        async def green(request):
+            # TODO
+            return self.generate_webpage()
+
+        @self._app.route("/blue")
+        async def blue(request):
+            # TODO
+            return self.generate_webpage()
+
+        @self._app.route("/yellow")
+        async def yellow(request):
+            # TODO
+            return self.generate_webpage()
+
+
 
     def run(self, port: int = 80):
         """Run the web server.
