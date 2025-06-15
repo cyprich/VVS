@@ -10,40 +10,25 @@ class SerialLED:
         self._np: NeoPixel = NeoPixel(Pin(8), 3)
         self._delay = 0.15
 
-        self._brightness: int
+        self._brightness: int = 255
         self.update_brightness()
 
-    def success(self):
-        for i in range(3):
-            self.shut_off()
-            self._np[i] = (0, self._brightness, 0)
-            self._np.write()
-
-            self._sleep()
-
-        self.shut_off(True)
+    def success(self, i: int):
+        self.turn_off()
+        self._np[i] = (0, self._brightness, 0)
+        self._np.write()
 
     def fail(self):
-        for i in range(3):
-            self.shut_off(True)
-            self._sleep()
+        self.turn_off(True)
+        self._np.fill((self._brightness, 0, 0))
+        self._np.write()
 
-            self._np.fill((self._brightness, 0, 0))
-            self._np.write()
-            self._sleep()
-
-        self.shut_off(True)
-
-    def _sleep(self):
-        # TODO
-        time.sleep(self._delay)
-
-    def shut_off(self, write: bool = False):
+    def turn_off(self, write: bool = False):
         self._np.fill((0, 0, 0))
         self._np.write() if write else None
 
     def deinit(self):
-        self.shut_off(True)
+        self.turn_off(True)
         pass
 
     def update_brightness(self):

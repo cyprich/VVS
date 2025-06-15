@@ -6,12 +6,8 @@ from cyprich_semestralka.ap import AP
 
 
 def main():
-    # manager = Manager()
-    # while True:
-    #     manager.next_level()
-    #     time.sleep(1)
     ap = AP()
-    ap.init("esp32")
+    ap.init("esp32-cyprich")
 
     website = Website()
     website.run()

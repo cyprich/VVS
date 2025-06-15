@@ -19,7 +19,7 @@
             padding: 1em 2em;
         }
 
-        .grid {
+        .controls {
             width: max-content;
             display: grid;
             gap: 1em;
@@ -27,17 +27,15 @@
             a {
                 width: 100px;
                 height: 100px;
-                padding: 20px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding: 20px;
 
-                p {
-                    font-weight: 900;
-                    font-size: 1.2em;
-                    text-decoration: none;
-                    text-underline: none;
-                }
+                font-weight: 900;
+                font-size: 1.2em;
+                text-decoration: none;
+                text-underline: none;
 
                 &:hover {
                     filter: brightness(0.9);
@@ -46,6 +44,13 @@
                 &:active {
                     filter: brightness(1.2);
                     transform: scale(0.9);
+                    text-decoration: none;
+                    color: inherit;
+                }
+
+                &:visited {
+                    text-decoration: none;
+                    color: inherit;
                 }
 
                 &:nth-child(1) {
@@ -72,12 +77,7 @@
                     grid-row-start: 3;
                 }
 
-                &:nth-child(5) {
-                    grid-column-start: 2;
-                    grid-row-start: 4;
-                }
-
-                &:nth-child(-n+3) p {
+                &:nth-child(-n+3) {
                     color: white
                 }
             }
@@ -89,34 +89,58 @@
             background: black;
         }
 
+        .help {
+        }
+
     </style>
 </head>
-<body style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2em">
-<div>
-    <h1>Semestralna Praca</h1>
-    <h2>Peter Cyprich</h2>
-</div>
+<body style="display: flex; flex-direction: column; align-items: center; gap: 2em">
+<h1>Simon Says</h1>
 <main>
-    <div style="display: flex; gap: 3em; height: max-content">
-        <div class="grid">
-            <a href="/red" style="">
-                <p>Červená</p>
-            </a>
-            <a href="/green">
-                <p>Zelená</p>
-            </a>
-            <a href="/blue">
-                <p>Modrá</p>
-            </a>
-            <a href="/yellow">
-                <p>Žltá</p>
-            </a>
-            <a href="/submit">
-                <button class="submit-button">Potvrdiť</button>
-            </a>
+    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 3em; height: max-content; margin: 0 2em">
+        <div style="display: flex; gap: 2em; flex-direction: column; align-items: center">
+            <div class="controls" style="justify-self: center">
+                <a href="/red">Červená</a>
+                <a href="/green">Zelená</a>
+                <a href="/blue">Modrá</a>
+                <a href="/yellow">Žltá</a>
+            </div>
+            <div style="display: flex; gap: 1em; grid-column-start: 2; grid-row-start: 4">
+                <a href="/start">
+                    <button class="submit-button">Start/Restart</button>
+                </a>
+                <a href="/submit">
+                    <button class="submit-button">Potvrdiť</button>
+                </a>
+            </div>
         </div>
         <div class="separator"></div>
-        <div class="help"></div>
+        <div class="help">
+            <h2>Informácie</h2>
+            <p>Semestrálna práca - Hra Simon Says</p>
+            <b>Princíp hry</b>
+            <p>
+                Vašou úlohou je sledovat a zapamätať si postupnosť svetelných signálov,
+                ktoré sa rozsvietia na LED diode na doske, a nasledne ich presne zopakovat
+            </p>
+            <p>Hra sa zacina stlacenim tlacidla <b>Start/Restart</b></p>
+            <p>Na zaciatku hry sa nahodne vyberie jedna farba,
+                ktora sa rozsvieti na LED diode.
+                Hrac si tuto farbu musi zapamatat, a zopakovat stlacenim tlacidla s prislusnou farbou.
+                V kazdom dalsom kole hry sa prida jedna nahodna farba na koniec sekvencie,
+                pricom hrac musi zakazdym tuto sekvenciu zopakovat.
+            </p>
+            <p>
+                Ked zadate celu sekvenciu svetiel, stlacte tlacidlo <b>Potvrdit</b>.
+                Ak sa na doske rozsvietia seriove LED diody nazeleno, sekvenciu ste zadali spravne.
+                Ak sa na doske rozsvietia seriove LED diody nacerveno,
+                sekvenciu ste zadali nespravne a hra sa zacina odzaciatku.
+            </p>
+            <!--            <b>Skore</b>-->
+            <!--            <p>-->
+            <!--                Skore zaznamenava pocet urovni, ktore ste uspesne zvladli, resp. dlzku sekvencie farieb. -->
+            <!--            </p>-->
+        </div>
     </div>
 </main>
 </body>

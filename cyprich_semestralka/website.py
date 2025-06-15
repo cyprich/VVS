@@ -4,6 +4,8 @@ Creates website, and makes user to control peripherals (LED's, buzzer,
 photoresistor) through web interface with the use of Microdot library.
 """
 import os
+
+from cyprich_semestralka.manager import Manager
 from microdot.microdot import Microdot, Response
 from microdot.utemplate import Template
 
@@ -28,6 +30,8 @@ class Website:
         Response.default_content_type = "text/html"
 
         # initializing peripherals
+        self._manager = Manager()
+        self._user_entries: str = ""
 
         # defining variables
         self._page_vars = {}
@@ -44,27 +48,37 @@ class Website:
 
         @self._app.route("/submit")
         async def submit(request):
-            # TODO
+            if self._manager.validate_input(self._user_entries):
+                self._user_entries = ""
+                self._manager.next_level()
+            else:
+                await start("")
             return self.generate_webpage()
 
         @self._app.route("/red")
         async def red(request):
-            # TODO
+            self._user_entries += "r"
             return self.generate_webpage()
 
         @self._app.route("/green")
         async def green(request):
-            # TODO
+            self._user_entries += "g"
             return self.generate_webpage()
 
         @self._app.route("/blue")
         async def blue(request):
-            # TODO
+            self._user_entries += "b"
             return self.generate_webpage()
 
         @self._app.route("/yellow")
         async def yellow(request):
-            # TODO
+            self._user_entries += "y"
+            return self.generate_webpage()
+
+        @self._app.route("/start")
+        async def start(request):
+            self._manager.reset_level()
+            self._manager.next_level()
             return self.generate_webpage()
 
 

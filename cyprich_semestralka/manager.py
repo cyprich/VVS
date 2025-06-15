@@ -25,20 +25,19 @@ class Manager:
         for i in self._entries:
             self._main_led.set(i)
             self._buzzer.play(i)
-            time.sleep(Globals.speed / Globals.ratio * (Globals.ratio - 1))
+            time.sleep(Globals.speed_main / Globals.ratio * (Globals.ratio - 1))
 
             self._main_led.turn_off()
             self._buzzer.turn_off()
-            time.sleep(Globals.speed / Globals.ratio)
+            time.sleep(Globals.speed_main / Globals.ratio)
 
-        u: str = input("Enter values: ")
-        if not self.validate_input(u):
-            self.reset_level()
+        # u: str = input("Enter values: ")
+        # if not self.validate_input(u):
+        #     self.reset_level()
 
     def reset_level(self):
         self._entries.clear()
         Globals.reset_speed()
-
 
     def validate_input(self, user_entries: list[Entry] | str) -> bool:
         entries: list[str] = []
@@ -61,10 +60,27 @@ class Manager:
         return True
 
     def success(self):
-        self._serial_led.success()
+        for i in range(3):
+            self._serial_led.success(i)
+            self._buzzer.success(i)
+            time.sleep(Globals.speed_serial)
+            self._serial_led.turn_off(True)
+            self._buzzer.turn_off()
+
+        time.sleep(Globals.speed_main)
 
     def fail(self):
-        self._serial_led.fail()
+        for i in range(3):
+            self._serial_led.fail()
+            self._buzzer.fail()
+            time.sleep(Globals.speed_serial / Globals.ratio * (Globals.ratio + 1))
+
+            self._serial_led.turn_off(True)
+            self._buzzer.turn_off()
+            time.sleep(Globals.speed_serial / Globals.ratio)
+
+        time.sleep(Globals.speed_main)
+
 
     def deinit(self):
         self._main_led.deinit()
