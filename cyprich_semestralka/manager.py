@@ -6,36 +6,43 @@ from cyprich_semestralka.entry import Entry
 from cyprich_semestralka.globals import Globals
 from cyprich_semestralka.main_led import MainLED
 from cyprich_semestralka.serial_led import SerialLED
+from cyprich_semestralka.ap import AP
 
 
 class Manager:
-    def __init__(self):
-        self._main_led: MainLED = MainLED()
-        self._serial_led: SerialLED = SerialLED()
-        self._buzzer: Buzzer = Buzzer()
+    AP: AP = AP()
+    FILENAME: str = "cyprich_semestralka/highscore.txt"
+    highscore: int = 0
 
-        self._entries: list[Entry] = []
+    _main_led: MainLED = MainLED()
+    _serial_led: SerialLED = SerialLED()
+    _buzzer: Buzzer = Buzzer()
 
-    def next_level(self):
-        self._entries.append(random.choice(Entry.get_values()))
+    _entries: list[Entry] = []
 
-        if len(self._entries) % Globals.SPEED_UP_LEVELS == 0:
+    @staticmethod
+    def next_level():
+        Manager._entries.append(random.choice(Entry.get_values()))
+
+        if len(Manager._entries) % Globals.SPEED_UP_LEVELS == 0:
             Globals.speed_up()
 
-        for i in self._entries:
-            self._main_led.set(i)
-            self._buzzer.play(i)
+        for i in Manager._entries:
+            Manager._main_led.set(i)
+            Manager._buzzer.play(i)
             time.sleep(Globals.SPEED_MAIN / Globals.RATIO * (Globals.RATIO - 1))
 
-            self._main_led.turn_off()
-            self._buzzer.turn_off()
+            Manager._main_led.turn_off()
+            Manager._buzzer.turn_off()
             time.sleep(Globals.SPEED_MAIN / Globals.RATIO)
 
-    def reset_level(self):
-        self._entries.clear()
+    @staticmethod
+    def reset_level():
+        Manager._entries.clear()
         Globals.reset_speed()
 
-    def validate_input(self, user_entries: list[Entry] | str) -> bool:
+    @staticmethod
+    def validate_input(user_entries: list[Entry] | str) -> bool:
         entries: list[str] = []
 
         if isinstance(user_entries, str):
@@ -43,44 +50,72 @@ class Manager:
         elif isinstance(user_entries, list):
             entries = [i[2] for i in user_entries]
 
-        for i in range(len(self._entries)):
+        for i in range(len(Manager._entries)):
             try:
-                if self._entries[i][2] != entries[i]:
+                if Manager._entries[i][2] != entries[i]:
                     raise AssertionError
 
             except (AssertionError, IndexError):
-                self.fail()
+                Manager.fail()
                 return False
 
-        self.success()
+        Manager.success()
         return True
 
-    def success(self):
+    @staticmethod
+    def success():
         for i in range(3):
-            self._serial_led.success(i)
-            self._buzzer.success(i)
+            Manager._serial_led.success(i)
+            Manager._buzzer.success(i)
             time.sleep(Globals.SPEED_SERIAL)
-            self._serial_led.turn_off(True)
-            self._buzzer.turn_off()
+            Manager._serial_led.turn_off(True)
+            Manager._buzzer.turn_off()
+
+        # handle highscore
+        if Manager.highscore < Manager.get_current_level_number():
+            Manager.highscore = Manager.get_current_level_number()
+            print(f"new highscore {Manager.highscore}")
+            Manager.save_highscore()
 
         time.sleep(Globals.SPEED_MAIN)
 
-    def fail(self):
+    @staticmethod
+    def fail():
         for i in range(3):
-            self._serial_led.fail()
-            self._buzzer.fail()
+            Manager._serial_led.fail()
+            Manager._buzzer.fail()
             time.sleep(Globals.SPEED_SERIAL / Globals.RATIO * (Globals.RATIO + 1))
 
-            self._serial_led.turn_off(True)
-            self._buzzer.turn_off()
+            Manager._serial_led.turn_off(True)
+            Manager._buzzer.turn_off()
             time.sleep(Globals.SPEED_SERIAL / Globals.RATIO)
 
         time.sleep(Globals.SPEED_MAIN)
 
-    def get_current_level_number(self) -> int:
-        return len(self._entries)
+    @staticmethod
+    def get_current_level_number() -> int:
+        return len(Manager._entries)
 
-    def deinit(self):
-        self._main_led.deinit()
-        self._serial_led.deinit()
-        self._buzzer.deinit()
+    @staticmethod
+    def deinit():
+        Manager._main_led.deinit()
+        Manager._serial_led.deinit()
+        Manager._buzzer.deinit()
+
+    @staticmethod
+    def load_highscore():
+        try:
+            with open(Manager.FILENAME, 'r') as file:
+                Manager.highscore = int(file.read())
+        except Exception:
+            pass
+
+
+    @staticmethod
+    def save_highscore():
+        try:
+            with open(Manager.FILENAME, 'w') as file:
+                print(f"about to write {Manager.highscore}")
+                file.write(str(Manager.highscore))
+        except Exception:
+            pass

@@ -1,4 +1,4 @@
-<!doctype html>
+{% args score, highscore %}
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
@@ -98,7 +98,11 @@
 <h1>Simon Says</h1>
 <main>
     <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 3em; height: max-content; margin: 0 2em">
-        <div style="display: flex; gap: 2em; flex-direction: column; align-items: center">
+        <div style="display: flex; gap: 1em; flex-direction: column; align-items: center">
+            <div style="display: flex; flex-direction: column; gap: 0.5em">
+                <p>Score: <b>{{score}}</b></p>
+                <p>Highscore: <b>{{highscore}}</b></p>
+            </div>
             <div class="controls" style="justify-self: center">
                 <a href="/red">Červená</a>
                 <a href="/green">Zelená</a>

@@ -6,14 +6,12 @@ from cyprich_semestralka.ap import AP
 
 
 def main():
-    ap = AP()
-    ap.init("esp32-cyprich")
+    Manager.AP.init("cyprich-esp32")
+    Manager.load_highscore()
 
     website = Website()
     website.run()
 
-    while True:
-        pass
 
 if __name__ == '__main__':
     main()

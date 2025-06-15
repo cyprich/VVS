@@ -29,12 +29,8 @@ class Website:
         self._webpage = Template("semestralka.html")
         Response.default_content_type = "text/html"
 
-        # initializing peripherals
-        self._manager = Manager()
-        self._user_entries: str = ""
-
         # defining variables
-        self._page_vars = {}
+        self._user_entries: str = ""
 
         # runs the _endpoints() method to create endpoints
         self._endpoints()
@@ -73,8 +69,8 @@ class Website:
 
     def _handle_start(self):
         self._user_entries = ""
-        self._manager.reset_level()
-        self._manager.next_level()
+        Manager.reset_level()
+        Manager.next_level()
 
     def _handle_click(self, color: str):
         if color not in "rgby":
@@ -82,10 +78,10 @@ class Website:
 
         self._user_entries += color
 
-        if len(self._user_entries) >= self._manager.get_current_level_number():
-            if self._manager.validate_input(self._user_entries):
+        if len(self._user_entries) >= Manager.get_current_level_number():
+            if Manager.validate_input(self._user_entries):
                 self._user_entries = ""
-                self._manager.next_level()
+                Manager.next_level()
             else:
                 self._handle_start()
 
@@ -99,5 +95,7 @@ class Website:
 
     def generate_webpage(self):
         """Generate the webpage, uses variables defined in self._page_vars."""
-        # return self._webpage.render(**self._page_vars)
-        return self._webpage.render()
+        return self._webpage.render(
+            max(Manager.get_current_level_number() - 1, 0),
+            Manager.highscore
+        )
