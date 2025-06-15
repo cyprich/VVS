@@ -7,18 +7,24 @@ from cyprich_semestralka.globals import Globals
 from cyprich_semestralka.main_led import MainLED
 from cyprich_semestralka.serial_led import SerialLED
 from cyprich_semestralka.ap import AP
+from cyprich_semestralka.wifi import WiFi
+import cyprich_semestralka.ufirebase as firebase
 
 
 class Manager:
-    AP: AP = AP()
-    FILENAME: str = "cyprich_semestralka/highscore.txt"
-    highscore: int = 0
-
     _main_led: MainLED = MainLED()
     _serial_led: SerialLED = SerialLED()
     _buzzer: Buzzer = Buzzer()
-
     _entries: list[Entry] = []
+
+    AP: AP = AP()
+    _WIFI: WiFi = WiFi()
+
+    FILENAME: str = "cyprich_semestralka/highscore.txt"
+    highscore: int = 0
+
+    firebase.setURL("https://vvs-semestralka-a9ec0-default-rtdb.europe-west1.firebasedatabase.app/")
+
 
     @staticmethod
     def next_level():
@@ -74,7 +80,6 @@ class Manager:
         # handle highscore
         if Manager.highscore < Manager.get_current_level_number():
             Manager.highscore = Manager.get_current_level_number()
-            print(f"new highscore {Manager.highscore}")
             Manager.save_highscore()
 
         time.sleep(Globals.SPEED_MAIN)
@@ -97,6 +102,10 @@ class Manager:
         return len(Manager._entries)
 
     @staticmethod
+    def get_wanted_entries() -> str:
+        return "".join([i[2] for i in Manager._entries])
+
+    @staticmethod
     def deinit():
         Manager._main_led.deinit()
         Manager._serial_led.deinit()
@@ -115,7 +124,10 @@ class Manager:
     def save_highscore():
         try:
             with open(Manager.FILENAME, 'w') as file:
-                print(f"about to write {Manager.highscore}")
                 file.write(str(Manager.highscore))
         except Exception:
             pass
+
+    @staticmethod
+    def connect_to_wifi(ssid: str | None = None, password: str | None = None):
+        Manager._WIFI.connect_to_network(ssid, password)

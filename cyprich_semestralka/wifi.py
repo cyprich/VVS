@@ -3,8 +3,6 @@ import time
 import binascii
 import network
 
-from cyprich_uloha4.configuration import Configuration
-
 
 class WiFi:
     """Handle operations with WiFi."""
@@ -33,7 +31,7 @@ class WiFi:
             if i[4] == 0:
                 open_ssids.append(i[0].decode())
 
-    def connect_to_network(self) -> bool:
+    def connect_to_network(self, ssid: str | None = None, password: str | None = None) -> bool:
         """Connect to network.
 
         If Configuration.ssid is empty, it asks user to set the SSID and
@@ -44,37 +42,39 @@ class WiFi:
             self._nic.disconnect()
 
         # ssid and password
-        if Configuration.ssid == "":
+        if ssid is None or ssid == "":
             ssid = input("\nEnter SSID: ").strip(" ")
             password = input("Enter password: ")
 
-            Configuration.ssid = ssid
-            Configuration.password = password
 
         # connecting
-        self._nic.connect(Configuration.ssid, Configuration.password)
+        try:
+            self._nic.connect(ssid, password)
 
-        # waiting to connect for 10 seconds
-        print("Trying to connect", end='')
-        counter: int = 0
-        while not self._nic.isconnected() and counter < 10:
-            time.sleep(1)
-            counter += 1
-            print(".", end="")
+            # waiting to connect for 10 seconds
+            print(f"Trying to connect to WiFi \"{ssid}\"", end='')
+            counter: int = 0
+            while not self._nic.isconnected() and counter < 50:
+                time.sleep(0.5)
+                counter += 1
+                print(".", end="")
 
-        # prints IP, mask, ... if connected
-        if self._nic.isconnected():
-            print("\nConnected!")
-            values = self._nic.ifconfig()
-            print(f"\tIP:      {values[0]}")
-            print(f"\tMask:    {values[1]}")
-            print(f"\tGateway: {values[2]}")
-            print(f"\tDNS:     {values[3]}")
+            # prints IP, mask, ... if connected
+            if self._nic.isconnected():
+                print("\nConnected!")
+                values = self._nic.ifconfig()
+                print(f"\tIP:      {values[0]}")
+                print(f"\tMask:    {values[1]}")
+                print(f"\tGateway: {values[2]}")
+                print(f"\tDNS:     {values[3]}")
 
-            return True
+                return True
+
+        except Exception as e:
+            print(e)
 
         # prints fail message when not connected
-        print("Connection timeout, failed to connect...")
+        print("\nConnection timeout, failed to connect...")
         return False
 
     def disconnect(self):

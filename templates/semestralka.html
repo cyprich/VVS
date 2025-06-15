@@ -98,16 +98,16 @@
 <h1>Simon Says</h1>
 <main>
     <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 3em; height: max-content; margin: 0 2em">
-        <div style="display: flex; gap: 1em; flex-direction: column; align-items: center">
+        <div style="display: flex; gap: 2em; flex-direction: column; align-items: center">
             <div style="display: flex; flex-direction: column; gap: 0.5em">
-                <p>Score: <b>{{score}}</b></p>
-                <p>Highscore: <b>{{highscore}}</b></p>
+                <p style="margin: 0; padding: 0;">Score: <b>{{score}}</b></p>
+                <p style="margin: 0; padding: 0;">Highscore: <b>{{highscore}}</b></p>
             </div>
             <div class="controls" style="justify-self: center">
-                <a href="/red">Červená</a>
-                <a href="/green">Zelená</a>
-                <a href="/blue">Modrá</a>
-                <a href="/yellow">Žltá</a>
+                <a href="/red">Red</a>
+                <a href="/green">Green</a>
+                <a href="/blue">Blue</a>
+                <a href="/yellow">Yellow</a>
             </div>
             <a href="/start">
                 <button class="submit-button">Start/Restart</button>
@@ -115,30 +115,29 @@
         </div>
         <div class="separator"></div>
         <div class="help">
-            <h2>Informácie</h2>
-            <p>Semestrálna práca - Hra Simon Says</p>
-            <b>Princíp hry</b>
+            <h2>Info</h2>
+            <p>Semestrálna práca - Game Simon Says</p>
+            <b>Game description</b>
             <p>
-                Vašou úlohou je sledovat a zapamätať si postupnosť svetelných signálov,
-                ktoré sa rozsvietia na LED diode na doske, a nasledne ich presne zopakovat
+                Simon Says is an interactive memory game, where the player must
+                remember and repeat the sequence of colors displayed by the LED on the board.
             </p>
-            <p>Hra sa zacina stlacenim tlacidla <b>Start/Restart</b></p>
-            <p>Na zaciatku hry sa nahodne vyberie jedna farba,
-                ktora sa rozsvieti na LED diode.
-                Hrac si tuto farbu musi zapamatat, a zopakovat stlacenim tlacidla s prislusnou farbou.
-                V kazdom dalsom kole hry sa prida jedna nahodna farba na koniec sekvencie,
-                pricom hrac musi zakazdym tuto sekvenciu zopakovat.
+            <p>The game starts by pressing the <b>Start/Restart</b> button.</p>
+            <p>
+                At the beginning of the game, a random color is selected and flashed on the LED diode.
+                The player must remember this color, and press corresponding colored button.
+                In each following round, one new random color is added to the end of the sequence,
+                and entire sequence is shown again. The player's task is to watch and memorize the whole sequence
+                of light signals, and repeat them in the correct order.
             </p>
             <p>
-                Ked zadate celu sekvenciu svetiel, stlacte tlacidlo <b>Potvrdit</b>.
-                Ak sa na doske rozsvietia seriove LED diody nazeleno, sekvenciu ste zadali spravne.
-                Ak sa na doske rozsvietia seriove LED diody nacerveno,
-                sekvenciu ste zadali nespravne a hra sa zacina odzaciatku.
+                After the player finishes entering the whole sequence correctly, the serial LEDs on the board
+                light up green.
+                If the sequence is incorrect, the serial LEDs on the board light up red, and the game starts over.
+                You can start over any time by pressing the <i>Start/Restart</i> button
             </p>
-            <!--            <b>Skore</b>-->
-            <!--            <p>-->
-            <!--                Skore zaznamenava pocet urovni, ktore ste uspesne zvladli, resp. dlzku sekvencie farieb. -->
-            <!--            </p>-->
+            <hr>
+            <p>Author: Peter Cyprich</p>
         </div>
     </div>
 </main>

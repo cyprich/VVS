@@ -5,9 +5,12 @@ photoresistor) through web interface with the use of Microdot library.
 """
 import os
 
+import time
+
 from cyprich_semestralka.manager import Manager
 from microdot.microdot import Microdot, Response
 from microdot.utemplate import Template
+import cyprich_semestralka.ufirebase as firebase
 
 class Website:
     """Represents the web interface for controlling peripherals."""
@@ -78,7 +81,13 @@ class Website:
 
         self._user_entries += color
 
-        if len(self._user_entries) >= Manager.get_current_level_number():
+        # when correct number of buttons is clicked
+        if len(self._user_entries) >= Manager.get_current_level_number() != 0:
+            firebase.addto("values", {
+                "value_entered": self._user_entries,
+                "value_wanted": Manager.get_wanted_entries()
+            })
+
             if Manager.validate_input(self._user_entries):
                 self._user_entries = ""
                 Manager.next_level()
