@@ -31,10 +31,6 @@ class Manager:
             self._buzzer.turn_off()
             time.sleep(Globals.SPEED_MAIN / Globals.RATIO)
 
-        # u: str = input("Enter values: ")
-        # if not self.validate_input(u):
-        #     self.reset_level()
-
     def reset_level(self):
         self._entries.clear()
         Globals.reset_speed()
@@ -81,6 +77,8 @@ class Manager:
 
         time.sleep(Globals.SPEED_MAIN)
 
+    def get_current_level_number(self) -> int:
+        return len(self._entries)
 
     def deinit(self):
         self._main_led.deinit()

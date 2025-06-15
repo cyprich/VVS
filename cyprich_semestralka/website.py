@@ -46,43 +46,48 @@ class Website:
             """Handle the root endpoint."""
             return self.generate_webpage()
 
-        @self._app.route("/submit")
-        async def submit(request):
-            if self._manager.validate_input(self._user_entries):
-                self._user_entries = ""
-                self._manager.next_level()
-            else:
-                await start(request)
-            return self.generate_webpage()
-
         @self._app.route("/red")
         async def red(request):
-            self._user_entries += "r"
+            self._handle_click("r")
             return self.generate_webpage()
 
         @self._app.route("/green")
         async def green(request):
-            self._user_entries += "g"
+            self._handle_click("g")
             return self.generate_webpage()
 
         @self._app.route("/blue")
         async def blue(request):
-            self._user_entries += "b"
+            self._handle_click("b")
             return self.generate_webpage()
 
         @self._app.route("/yellow")
         async def yellow(request):
-            self._user_entries += "y"
+            self._handle_click("y")
             return self.generate_webpage()
 
         @self._app.route("/start")
         async def start(request):
-            self._user_entries = ""
-            self._manager.reset_level()
-            self._manager.next_level()
+            self._handle_start()
             return self.generate_webpage()
 
+    def _handle_start(self):
+        self._user_entries = ""
+        self._manager.reset_level()
+        self._manager.next_level()
 
+    def _handle_click(self, color: str):
+        if color not in "rgby":
+            return
+
+        self._user_entries += color
+
+        if len(self._user_entries) >= self._manager.get_current_level_number():
+            if self._manager.validate_input(self._user_entries):
+                self._user_entries = ""
+                self._manager.next_level()
+            else:
+                self._handle_start()
 
     def run(self, port: int = 80):
         """Run the web server.
