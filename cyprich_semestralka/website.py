@@ -52,7 +52,7 @@ class Website:
                 self._user_entries = ""
                 self._manager.next_level()
             else:
-                await start("")
+                await start(request)
             return self.generate_webpage()
 
         @self._app.route("/red")
@@ -77,6 +77,7 @@ class Website:
 
         @self._app.route("/start")
         async def start(request):
+            self._user_entries = ""
             self._manager.reset_level()
             self._manager.next_level()
             return self.generate_webpage()

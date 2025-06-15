@@ -18,7 +18,7 @@ class MainLED:
                 return
 
         # scales color from rgb (0-255) to duty_u16 (0-MAX_PWM) and adds brightness
-        scale_coef: float = Globals.MAX_PWM / 255 * Globals.brightness
+        scale_coef: float = Globals.MAX_VOLUME_PWM / 255 * Globals.brightness
 
         self._r.duty_u16(int(color[0] * scale_coef))
         self._g.duty_u16(int(color[1] * scale_coef))

@@ -21,7 +21,7 @@ class Buzzer:
         self._buz.duty_u16(0)
 
     def _set_volume(self):
-        self._buz.duty_u16(int(Globals.MAX_PWM * Globals.volume))
+        self._buz.duty_u16(int(Globals.MAX_VOLUME_PWM * Globals.volume))
 
     def success(self, i: int):
         self._set_volume()

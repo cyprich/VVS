@@ -1,20 +1,20 @@
 class Globals:
-    MAX_PWM: int = 32768
     brightness: float = 0.5  # 0-1
-    volume: float = 0.01 # 0-1
-    speed_main: float = 1  # speed in seconds
-    speed_serial: float = 0.15
-    ratio: int = 5  # ratio between on and off on led/buzzer during level
-    speed_up_levels: int = 2  # how many levels between speed up
+    volume: float = 0.005 # 0-1
+    MAX_VOLUME_PWM: int = 32768
+    SPEED_MAIN: float = 1  # speed of MainLED in seconds
+    SPEED_SERIAL: float = 0.15  # speed of SerialLED in seconds
+    RATIO: int = 5  # ratio between on and off on led/buzzer during level
+    SPEED_UP_LEVELS: int = 2  # how many levels between speed up
 
     @staticmethod
     def speed_up():
-        if Globals.speed_main < 0.1:
-            Globals.speed_main = 0.1
+        if Globals.SPEED_MAIN < 0.1:
+            Globals.SPEED_MAIN = 0.1
         else:
-            Globals.speed_main *= 0.9
+            Globals.SPEED_MAIN *= 0.9
 
 
     @staticmethod
     def reset_speed():
-        Globals.speed_main = 1  # TODO hard-typed value
+        Globals.SPEED_MAIN = 1  # TODO hard-typed value
