@@ -18,6 +18,7 @@ class WiFi:
         scanning = self._nic.scan()
         open_ssids = []
 
+        # list available networks
         print("List of available networks:")
         print(f"\t{'SSID':30} {'MAC':15} {'RSSI':6} Is open?")
         for i in scanning:
@@ -31,13 +32,14 @@ class WiFi:
             if i[4] == 0:
                 open_ssids.append(i[0].decode())
 
-    def connect_to_network(self, ssid: str | None = None, password: str | None = None) -> bool:
+    def connect_to_network(
+            self, ssid: str | None = None,
+            password: str | None = None) -> bool:
         """Connect to network.
 
-        If Configuration.ssid is empty, it asks user to set the SSID and
-        password of WiFi to connect to.
+        If ssid is empty, it asks user to set the SSID and password of
+        WiFi to connect to via console.
         """
-
         if self._nic.isconnected():
             self._nic.disconnect()
 
@@ -46,12 +48,11 @@ class WiFi:
             ssid = input("\nEnter SSID: ").strip(" ")
             password = input("Enter password: ")
 
-
         # connecting
         try:
             self._nic.connect(ssid, password)
 
-            # waiting to connect for 10 seconds
+            # waiting to connect for some time
             print(f"Trying to connect to WiFi \"{ssid}\"", end='')
             counter: int = 0
             while not self._nic.isconnected() and counter < 50:
@@ -86,4 +87,5 @@ class WiFi:
         self._nic.active(False)
 
     def is_connected(self) -> bool:
+        """Find out if ESP32 is connected to WiFi."""
         return self._nic.isconnected()

@@ -1,3 +1,7 @@
+"""Handle Google Firebase in MicroPython.
+
+Author: FRI UNIZA
+"""
 import ujson
 import usocket
 try:
