@@ -38,45 +38,45 @@ class Website:
         # runs the _endpoints() method to create endpoints
         self._endpoints()
 
-    def _endpoints(self):
+    def _endpoints(self) -> None:
         """Define the endpoints for the web server."""
         @self._app.route("/")
-        async def index(request):
+        async def index(request) -> None:
             """Handle the root endpoint."""
             return self.generate_webpage()
 
         @self._app.route("/red")
-        async def red(request):
+        async def red(request) -> None:
             """Handle click of red button."""
             self._handle_click("r")
             return self.generate_webpage()
 
         @self._app.route("/green")
-        async def green(request):
+        async def green(request) -> None:
             """Handle click of green button."""
             self._handle_click("g")
             return self.generate_webpage()
 
         @self._app.route("/blue")
-        async def blue(request):
+        async def blue(request) -> None:
             """Handle click of blue button."""
             self._handle_click("b")
             return self.generate_webpage()
 
         @self._app.route("/yellow")
-        async def yellow(request):
+        async def yellow(request) -> None:
             """Handle click of yellow button."""
             self._handle_click("y")
             return self.generate_webpage()
 
         @self._app.route("/start")
-        async def start(request):
+        async def start(request) -> None:
             """Start the game."""
             self._handle_start()
             return self.generate_webpage()
 
         @self._app.route("/wifi")
-        async def wifi(request):
+        async def wifi(request) -> None:
             """Update WiFi settings."""
             a = request.args
 
@@ -84,7 +84,7 @@ class Website:
                 Manager.connect_to_wifi(a["ssid"], a["password"])
 
         @self._app.route("/settings")
-        async def settings(request):
+        async def settings(request) -> None:
             """Update general settings."""
             a = request.args
 
@@ -95,7 +95,7 @@ class Website:
 
             return self.generate_webpage()
 
-    def _handle_start(self):
+    def _handle_start(self) -> None:
         """Start the game."""
         self._user_entries = ""
         Manager.reset_level()
@@ -129,7 +129,7 @@ class Website:
             else:
                 self._handle_start()
 
-    def run(self, port: int = 80):
+    def run(self, port: int = 80) -> None:
         """Run the web server.
 
         Allows user to specify the network port, which is set to 80 by
@@ -137,7 +137,7 @@ class Website:
         """
         self._app.run(port=port)
 
-    def generate_webpage(self):
+    def generate_webpage(self) -> None:
         """Generate the webpage with variables."""
         return self._webpage.render(
             max(Manager.get_current_level_number() - 1, 0),

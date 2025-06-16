@@ -32,7 +32,7 @@ class Manager:
     username: str = "DefaultUser"
 
     @staticmethod
-    def next_level():
+    def next_level() -> None:
         """Play next level."""
         Manager._entries.append(random.choice(Entry.get_values()))
 
@@ -51,7 +51,7 @@ class Manager:
             time.sleep(Globals.SPEED_MAIN / Globals.RATIO)
 
     @staticmethod
-    def reset_level():
+    def reset_level() -> None:
         """Reset levels to 0."""
         Manager._entries.clear()
         Globals.reset_speed()
@@ -79,7 +79,7 @@ class Manager:
         return True
 
     @staticmethod
-    def success():
+    def success() -> None:
         """Level successfully completed."""
         # Serial LEDs and Buzzer
         for i in range(3):
@@ -97,7 +97,7 @@ class Manager:
         time.sleep(Globals.SPEED_MAIN)
 
     @staticmethod
-    def fail():
+    def fail() -> None:
         """Level failed."""
         # Serial LEDs and buzzer
         for _ in range(3):
@@ -124,7 +124,7 @@ class Manager:
         return "".join([i[2] for i in Manager._entries])
 
     @staticmethod
-    def deinit():
+    def deinit() -> None:
         """Deinitialize peripherals."""
         Manager._main_led.deinit()
         Manager._serial_led.deinit()
@@ -134,7 +134,7 @@ class Manager:
         Manager._WIFI.deinit()
 
     @staticmethod
-    def load_highscore():
+    def load_highscore() -> None:
         """Load highscore from file."""
         try:
             with open(Manager.FILENAME, 'r', encoding="UTF-8") as file:
@@ -143,7 +143,7 @@ class Manager:
             print(e)
 
     @staticmethod
-    def save_highscore():
+    def save_highscore() -> None:
         """Save highscore to file."""
         try:
             with open(Manager.FILENAME, 'w', encoding="UTF-8") as file:
@@ -152,7 +152,7 @@ class Manager:
             print(e)
 
     @staticmethod
-    def connect_to_wifi(ssid: str | None = None, password: str | None = None):
+    def connect_to_wifi(ssid: str | None = None, password: str | None = None) -> None:
         """Connect to WiFi."""
         Manager.ssid = ssid
         Manager.password = password

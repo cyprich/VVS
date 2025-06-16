@@ -12,7 +12,7 @@ class WiFi:
         self._nic = network.WLAN(network.STA_IF)
         self._nic.active(True)
 
-    def scan_networks(self):
+    def scan_networks(self) -> None:
         """Scan available networks."""
         print("Scanning available networks...")
         scanning = self._nic.scan()
@@ -78,11 +78,11 @@ class WiFi:
         print("\nConnection timeout, failed to connect...")
         return False
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnect."""
         self._nic.disconnect()
 
-    def deinit(self):
+    def deinit(self) -> None:
         """Deinitialize network card."""
         self._nic.active(False)
 

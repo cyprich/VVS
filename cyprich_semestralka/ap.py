@@ -17,7 +17,7 @@ class AP:
         """Create instance of the class."""
         self._nic = network.WLAN(network.AP_IF)
 
-    def init(self, ssid: str, password: str | None = None):
+    def init(self, ssid: str, password: str | None = None) -> None:
         """Initialize Access Point with given SSID and password.
 
         Password can be empty for network without password. If the
@@ -32,11 +32,11 @@ class AP:
 
         print(f"AP created! Default gateway: {self._nic.ifconfig()[2]}")
 
-    def deinit(self):
+    def deinit(self) -> None:
         """Deinitialize/Deactivate the Access Point."""
         self._nic.active(False)
 
-    def ask(self):
+    def ask(self) -> None:
         """Guides user through initialization of the Access Point.
 
         Asks for SSID and password and checks if it's correct.

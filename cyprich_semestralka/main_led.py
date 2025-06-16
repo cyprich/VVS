@@ -16,7 +16,7 @@ class MainLED:
         self._g: PWM = PWM(11, freq=120, duty_u16=0)
         self._b: PWM = PWM(10, freq=120, duty_u16=0)
 
-    def set(self, entry: Entry):
+    def set(self, entry: Entry) -> None:
         """Set the color of Main LED based on value from Entry."""
         color, _, _ = entry  # extract the color from entry
 
@@ -32,13 +32,13 @@ class MainLED:
         self._g.duty_u16(int(color[1] * scale_coef))
         self._b.duty_u16(int(color[2] * scale_coef))
 
-    def turn_off(self):
+    def turn_off(self) -> None:
         """Turn off the Main LED."""
         self._r.duty_u16(0)
         self._g.duty_u16(0)
         self._b.duty_u16(0)
 
-    def deinit(self):
+    def deinit(self) -> None:
         """Deinitialize the Main LED."""
         self._r.deinit()
         self._g.deinit()

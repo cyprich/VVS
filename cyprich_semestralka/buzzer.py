@@ -30,25 +30,25 @@ class Buzzer:
         _, freq, _ = entry  # extract frequency from entry
         self._buz.freq(freq)
 
-    def turn_off(self):
+    def turn_off(self) -> None:
         """Stop playing."""
         self._buz.duty_u16(0)
 
-    def _set_volume(self):
+    def _set_volume(self) -> None:
         """Set 'volume' (duty_u16) based on variables in Globals."""
         self._buz.duty_u16(int(Globals.MAX_VOLUME_PWM * Globals.volume))
 
-    def success(self, i: int):
+    def success(self, i: int) -> None:
         """Play sound of successfully completed level."""
         self._set_volume()
         self._buz.freq(self._success_freq[i])
 
-    def fail(self):
+    def fail(self) -> None:
         """Play sound of unsuccessfully completed level."""
         self._set_volume()
         self._set_volume()
         self._buz.freq(self._fail_freq)
 
-    def deinit(self):
+    def deinit(self) -> None:
         """Deinitialize the buzzer."""
         self._buz.deinit()

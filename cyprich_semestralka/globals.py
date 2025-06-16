@@ -17,7 +17,7 @@ class Globals:
         "rtdb.europe-west1.firebasedatabase.app/")
 
     @staticmethod
-    def speed_up():
+    def speed_up() -> None:
         """Rise the speed up."""
         if Globals.SPEED_MAIN < 0.1:
             Globals.SPEED_MAIN = 0.1
@@ -25,6 +25,6 @@ class Globals:
             Globals.SPEED_MAIN *= 0.9
 
     @staticmethod
-    def reset_speed():
+    def reset_speed() -> None:
         """Reset the speed."""
         Globals.SPEED_MAIN = 1

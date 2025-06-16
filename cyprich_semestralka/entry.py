@@ -26,6 +26,6 @@ class Entry:
         return [Entry.RED, Entry.GREEN, Entry.BLUE, Entry.YELLOW]
 
     @staticmethod
-    def get_string_representations():
+    def get_string_representations() -> list[str]:
         """Get string representations of all entries."""
         return [i[2] for i in Entry.get_values()]
