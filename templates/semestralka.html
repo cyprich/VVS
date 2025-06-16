@@ -1,4 +1,4 @@
-{% args score, highscore %}
+{% args score, highscore, ssid, password, username, volume, brightness, dblink %}
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
@@ -92,14 +92,39 @@
         .help {
         }
 
+        .settings {
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75em;
+                margin-left: 1em;
+
+                input {
+                    margin-left: 1em;
+
+                    &[type=submit] {
+                        width: max-content;
+                        padding: 0.5em 2em;
+                    }
+
+                }
+
+                label:has(input[type=range]) {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+
     </style>
 </head>
-<body style="display: flex; flex-direction: column; align-items: center; gap: 2em">
+<body style="display: flex; flex-direction: column; align-items: center; gap: 2em; margin: 2em;">
 <h1>Simon Says</h1>
 <main>
     <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 3em; height: max-content; margin: 0 2em">
         <div style="display: flex; gap: 2em; flex-direction: column; align-items: center">
             <div style="display: flex; flex-direction: column; gap: 0.5em">
+                <h2>Controls</h2>
                 <p style="margin: 0; padding: 0;">Score: <b>{{score}}</b></p>
                 <p style="margin: 0; padding: 0;">Highscore: <b>{{highscore}}</b></p>
             </div>
@@ -132,13 +157,64 @@
             </p>
             <p>
                 After the player finishes entering the whole sequence correctly, the serial LEDs on the board
-                light up green.
-                If the sequence is incorrect, the serial LEDs on the board light up red, and the game starts over.
-                You can start over any time by pressing the <i>Start/Restart</i> button
+                light up green, and value of <b>Score</b> rises by one.
+                If the sequence is incorrect, the serial LEDs on the board light up red, the game starts over,
+                and the value of <b>Score</b> resets to zero.
+                You can start over any time by pressing the <i>Start/Restart</i> button.
+                <b>Highscore</b> keeps track of the highest score of all time.
             </p>
-            <hr>
-            <p>Author: Peter Cyprich</p>
+            <b>Settings</b>
+            <p>In settings, you can configure following properties:</p>
+            <ul>
+                <li>SSID (name) of the WiFi network to connect to</li>
+                <li>Password of the WiFi network to connect to (leave empty if WiFi doesn't have password)</li>
+                <li>Username to represent yourself in database</li>
+                <li>Loudness of the buzzer</li>
+                <li>Brightness of all LED diodes (Main LED and Serial LEDs)</li>
+            </ul>
+            <p>See you IDE's console for more info about connecting to the internet and possible errors.</p>
+            <b>Database</b>
+            <p>
+                The game is connected to database - Firebase Realtime Database.
+                After each level, the game sends data to Firebase (only if you are connected to the internet.
+                You can view the data anytime by visiting <b><a href="{{dblink}}" target="_blank">this link</a></b>.
+            </p>
+            <p><b>Author</b>: Peter Cyprich</p>
         </div>
+    </div>
+    <hr style="margin: 2em 0">
+    <div class="settings">
+        <h2>Settings</h2>
+        <form action="/wifi" class="form">
+            <h3>WiFi settings</h3>
+            <label for="ssid">
+                WiFi SSID
+                <input type="text" name="ssid" id="ssid" value="{{ssid}}">
+            </label>
+            <label for="password">
+                WiFi Password
+                <input type="password" name="password" id="password" value="{{password}}">
+            </label>
+            <input type="submit" value="Submit">
+        </form>
+        <form action="/settings" class="form">
+            <h3>General settings</h3>
+            <label for="username">
+                Username
+                <input type="text" name="username" id="username" value="{{username}}" required>
+            </label>
+            <label for="volume">
+                Buzzer volume
+                <input type="range" name="volume" id="volume" min="0" max="100" step="1" value="{{volume}}">
+                ({{volume}}%)
+            </label>
+            <label for="brightness">
+                LED Brightness
+                <input type="range" name="brightness" id="brightness" min="0" max="100" step="1" value="{{brightness}}">
+                ({{brightness}}%)
+            </label>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 </main>
 </body>

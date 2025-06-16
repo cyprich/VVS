@@ -5,8 +5,7 @@ photoresistor) through web interface with the use of Microdot library.
 """
 import os
 
-import time
-
+from cyprich_semestralka.globals import Globals
 from cyprich_semestralka.manager import Manager
 from microdot.microdot import Microdot, Response
 from microdot.utemplate import Template
@@ -70,6 +69,24 @@ class Website:
             self._handle_start()
             return self.generate_webpage()
 
+        @self._app.route("/wifi")
+        async def settings(request):
+            a = request.args
+
+            if a["ssid"] != "":
+                Manager.connect_to_wifi(a["ssid"], a["password"])
+
+        @self._app.route("/settings")
+        async def settings(request):
+            a = request.args
+
+            Manager.username = a["username"].strip(" ")
+
+            Globals.brightness = round(float(a["brightness"]) / 100, 2)
+            Globals.volume = round(float(a["volume"]) / 100, 2)
+
+            return self.generate_webpage()
+
     def _handle_start(self):
         self._user_entries = ""
         Manager.reset_level()
@@ -83,10 +100,16 @@ class Website:
 
         # when correct number of buttons is clicked
         if len(self._user_entries) >= Manager.get_current_level_number() != 0:
-            firebase.addto("values", {
-                "value_entered": self._user_entries,
-                "value_wanted": Manager.get_wanted_entries()
-            })
+            if Manager.is_connected_to_wifi():
+                try:
+                    firebase.addto("values", {
+                        "value_entered": self._user_entries,
+                        "value_wanted": Manager.get_wanted_entries(),
+                        "username": Manager.username,
+                        "level_number": Manager.get_current_level_number()
+                    })
+                except Exception as e:
+                    print(e)
 
             if Manager.validate_input(self._user_entries):
                 self._user_entries = ""
@@ -106,5 +129,11 @@ class Website:
         """Generate the webpage, uses variables defined in self._page_vars."""
         return self._webpage.render(
             max(Manager.get_current_level_number() - 1, 0),
-            Manager.highscore
+            Manager.highscore,
+            Manager.ssid,
+            Manager.password,
+            Manager.username,
+            Globals.volume * 100,
+            Globals.brightness * 100,
+            Globals.DATABASE_LINK
         )

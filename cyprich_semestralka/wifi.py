@@ -37,7 +37,7 @@ class WiFi:
         If Configuration.ssid is empty, it asks user to set the SSID and
         password of WiFi to connect to.
         """
-        # disconnect if already connected
+
         if self._nic.isconnected():
             self._nic.disconnect()
 
@@ -84,3 +84,6 @@ class WiFi:
     def deinit(self):
         """Deinitialize network card."""
         self._nic.active(False)
+
+    def is_connected(self) -> bool:
+        return self._nic.isconnected()

@@ -19,12 +19,14 @@ class Manager:
 
     AP: AP = AP()
     _WIFI: WiFi = WiFi()
+    ssid: str = ""
+    password: str = ""
 
     FILENAME: str = "cyprich_semestralka/highscore.txt"
     highscore: int = 0
 
-    firebase.setURL("https://vvs-semestralka-a9ec0-default-rtdb.europe-west1.firebasedatabase.app/")
-
+    firebase.setURL(Globals.DATABASE_LINK)
+    username: str = "DefaultUser"
 
     @staticmethod
     def next_level():
@@ -130,4 +132,10 @@ class Manager:
 
     @staticmethod
     def connect_to_wifi(ssid: str | None = None, password: str | None = None):
+        Manager.ssid = ssid
+        Manager.password = password
         Manager._WIFI.connect_to_network(ssid, password)
+
+    @staticmethod
+    def is_connected_to_wifi() -> bool:
+        return Manager._WIFI.is_connected()
